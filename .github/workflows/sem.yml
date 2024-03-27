@@ -11,9 +11,10 @@ jobs:
   semTest:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Run Semgrep
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
         run: |
-          docker run -e SEMGREP_APP_TOKEN="$SEMGREP_APP_TOKEN" --rm -v "${PWD}:/src" semgrep/semgrep semgrep ci
+          docker run -e SEMGREP_APP_TOKEN="$SEMGREP_APP_TOKEN" --rm -v "${PWD}:/app" semgrep/semgrep semgrep ci
           
