@@ -7,6 +7,6 @@ plugins {
     id("com.google.firebase.crashlytics") version "2.9.2" apply false
 }
 
-dependencyLocking {
-  lockAllConfigurations()
+allprojects {
+    tasks.register("printAllDependencies",DependencyReportTask::class) {}
 }
