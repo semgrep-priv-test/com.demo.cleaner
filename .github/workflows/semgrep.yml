@@ -20,21 +20,28 @@ jobs:
       uses: actions/checkout@v4
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
-    - name: Run build with Gradle Wrapper
-      run: ./gradlew build
+    # - name: Run build with Gradle Wrapper
+    #   run: ./gradlew build
+    - name: Build gradle lockfile
+      run: ./gradlew printAllDependencies --write-locks
+    - name: Upload Gradle Lock File
+      uses: actions/upload-artifact@v3
+      with:
+        name: gradlelockfile
+        path: ./app/gradle.lockfile 
 
-  # semgrep:
-  #   needs: buildGradleLockFile
-  #   name: Scan
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-  #   container:
-  #     image: returntocorp/semgrep
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Download artifact from previous job
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: gradlelockfile
-  #     - run: semgrep ci
+  semgrep:
+    needs: build-gradle-project
+    name: Scan
+    runs-on: ubuntu-latest
+    env:
+      SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+    container:
+      image: returntocorp/semgrep
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download artifact from previous job
+        uses: actions/download-artifact@v3
+        with:
+          name: gradlelockfile
+      - run: semgrep ci
