@@ -15,6 +15,6 @@ jobs:
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
         run: |
-          docker run -d --name semgrep -v "${PWD}:/src" semgrep/semgrep 
+          docker run -d --name semgrep -v "${PWD}:/" semgrep/semgrep 
           docker exec -e SEMGREP_APP_TOKEN="$SEMGREP_APP_TOKEN" semgrep semgrep
           
