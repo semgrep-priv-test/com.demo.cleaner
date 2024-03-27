@@ -16,5 +16,5 @@ jobs:
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
         run: |
-          docker run -e SEMGREP_APP_TOKEN="$SEMGREP_APP_TOKEN" --rm -v "${PWD}:/" semgrep/semgrep semgrep ci
+          docker run -e SEMGREP_APP_TOKEN="$SEMGREP_APP_TOKEN" --rm -v "${{ github.workspace }}" semgrep/semgrep semgrep ci
           
