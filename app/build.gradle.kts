@@ -89,5 +89,5 @@ dependencies {
 }
 
 dependencyLocking {
-  lockAllConfigurations()
+    lockAllConfigurations()
 }
