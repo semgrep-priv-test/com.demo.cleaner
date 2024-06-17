@@ -1,14 +1,11 @@
 # Name of this GitHub Actions workflow.
 name: Semgrep
 on:
-
   pull_request: {}
-
   push:
     branches: ["master", "main"]
     paths:
     - .github/workflows/semgrep.yml
-
 jobs:
   build-gradle-project:
     runs-on: ubuntu-latest
